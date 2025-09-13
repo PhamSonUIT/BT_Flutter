@@ -269,12 +269,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
+    return MaterialApp(home: LandingPage());
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -317,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SecondScreen()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   },
                   child: Stack(
@@ -351,30 +351,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Card extends StatelessWidget {
-  final IconData icon;
-  final String title;
-
-  const Card({super.key, required this.icon, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.all(8),
-        width: 150,
-        height: 150,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Icon(icon, size: 48), Text(title)],
-        ),
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -467,18 +445,33 @@ class SecondScreen extends StatelessWidget {
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 16,
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.all(8),
-                        width: 150,
-                        child: Card(icon: Icons.apple, title: "Fruit"),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ],
+                      padding: EdgeInsets.all(8),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProductPage()),
+                      ),
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          width: 150,
+                          child: Card(icon: Icons.apple, title: "Fruit"),
+                        ),
+                      ],
+                    ),
                   ),
                   Stack(
                     children: [
@@ -525,6 +518,122 @@ class SecondScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ProductPage extends StatelessWidget {
+  const ProductPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Container(
+        margin: EdgeInsets.all(16),
+
+        child: Column(
+          children: [
+            Product(name: "Appple", price: 5),
+            SizedBox(height: 16),
+            Product(name: "Appple", price: 5),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Card extends StatelessWidget {
+  final IconData icon;
+  final String title;
+
+  const Card({super.key, required this.icon, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(8),
+        width: 150,
+        height: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Icon(icon, size: 48), Text(title)],
+        ),
+      ),
+    );
+  }
+}
+
+class Product extends StatelessWidget {
+  final String name;
+  final double price;
+  const Product({super.key, required this.name, required this.price});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: EdgeInsetsGeometry.all(8),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image(
+                    image: NetworkImage(
+                      'https://yt3.ggpht.com/yti/ANjgQV_t9iD30-BzUVZUElt-DUXXmwqa-nCmyPmh11_-iB4FSFM=s88-c-k-c0x00ffffff-no-rj',
+                    ),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text("1000 ready stock"),
+                      Text(
+                        "\$$price",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                Icon(Icons.heart_broken),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
