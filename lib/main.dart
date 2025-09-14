@@ -267,6 +267,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: LandingPage());
@@ -527,6 +528,25 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> items = [
+      {"name": "Apple", "price": 5},
+      {"name": "Banana", "price": 3},
+      {"name": "Orange", "price": 4},
+      {"name": "Grapes", "price": 6},
+      {"name": "Mango", "price": 10},
+      {"name": "Pineapple", "price": 8},
+      {"name": "Strawberry", "price": 7},
+      {"name": "Watermelon", "price": 12},
+      {"name": "Peach", "price": 9},
+      {"name": "Cherry", "price": 11},
+    ];
+
+    final List<Container> itemWidgets = items.map((item) {
+      return Container(
+        margin: EdgeInsets.only(bottom: 16),
+        child: Product(name: item['name'], price: item['price']),
+      );
+    }).toList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -540,12 +560,36 @@ class ProductPage extends StatelessWidget {
       body: Container(
         margin: EdgeInsets.all(16),
 
-        child: Column(
-          children: [
-            Product(name: "Appple", price: 5),
-            SizedBox(height: 16),
-            Product(name: "Appple", price: 5),
-          ],
+        // child: Column(
+        //   children: [
+        //     // Product(name: "Appple", price: 5),
+        //     // SizedBox(height: 16),
+        //     // Product(name: "Appple", price: 5),
+
+        //     ...itemWidgets
+        //   ],
+        // ),
+
+        // child: ListView.builder(
+        //   itemCount: items.length,
+        //   itemBuilder: (context, index) {
+        //     final item = items[index];
+        //     return Container(
+        //       margin: EdgeInsets.only(bottom: 16),
+        //       child: Product(name: item['name'], price: item['price']),
+        //     );
+        //   },
+        // ),
+        child: ListView.separated(
+          separatorBuilder: (context, index) => SizedBox(height: 16),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return Container(
+              margin: EdgeInsets.only(bottom: 16),
+              child: Product(name: item['name'], price: item['price']),
+            );
+          },
         ),
       ),
     );
@@ -576,7 +620,7 @@ class Card extends StatelessWidget {
 
 class Product extends StatelessWidget {
   final String name;
-  final double price;
+  final int price;
   const Product({super.key, required this.name, required this.price});
 
   @override
