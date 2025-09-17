@@ -462,6 +462,7 @@ class HomePage extends StatelessWidget {
                     },
                     child: Stack(
                       children: [
+                        
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
@@ -613,6 +614,76 @@ class Card extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Icon(icon, size: 48), Text(title)],
         ),
+      ),
+    );
+  }
+}
+
+class Listtile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+
+  const Listtile({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      subtitle: Text(subtitle),
+    );
+  }
+}
+
+class ListTilePage extends StatelessWidget {
+  const ListTilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: ListView(
+        children: [
+          Listtile(
+            title: "Apple",
+            subtitle: "1000 ready stock",
+            icon: Icons.apple,
+          ),
+          Listtile(
+            title: "Banana",
+            subtitle: "1000 ready stock",
+            icon: Icons.baby_changing_station,
+          ),
+          Listtile(
+            title: "Orange",
+            subtitle: "1000 ready stock",
+            icon: Icons.circle,
+          ),
+          Listtile(
+            title: "Grapes",
+            subtitle: "1000 ready stock",
+            icon: Icons.grass,
+          ),
+          Listtile(
+            title: "Mango",
+            subtitle: "1000 ready stock",
+            icon: Icons.set_meal,
+          ),
+        ],
       ),
     );
   }
