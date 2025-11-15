@@ -1130,198 +1130,316 @@
 //   }
 // }
 
+// import 'package:flutter/material.dart';
 
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'ESP32 UDP Demo',
+//       theme: ThemeData(primarySwatch: Colors.blue),
+//       home: const WifiPage(),
+//     );
+//   }
+// }
+
+// class WifiPage extends StatefulWidget {
+//   const WifiPage({super.key});
+
+//   @override
+//   State<WifiPage> createState() => _WifiPageState();
+// }
+
+// class _WifiPageState extends State<WifiPage> {
+//   List<Map<String, dynamic>> items = [];
+
+//   List<Map<String, dynamic>> repoItems = [
+//     {
+//       'name': 'IPhone 17',
+//       'price': 500,
+//       'quality': 5,
+//       'img':
+//           'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
+//     },
+//     {
+//       'name': 'IPhone 17 Air',
+//       'price': 600,
+//       'quality': 4,
+//       'img':
+//           'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
+//     },
+//     {
+//       'name': 'IPhone 17 Pro Max',
+//       'price': 700,
+//       'quality': 4,
+//       'img':
+//           'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
+//     },
+//   ];
+
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Clone Store")),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text('Giỏ hàng'),
+//             Expanded(
+//               child: items.isEmpty
+//                   ? const Center(child: Text("Chưa có sản phẩm nào trong GH"))
+//                   : ListView.builder(
+//                       itemCount: items.length,
+//                       itemBuilder: (context, index) {
+//                         return Card(
+//                           child: ListTile(
+//                             leading: Image.network(items[index]['img']),
+//                             trailing: GestureDetector(
+//                               onTap: () {
+//                                 setState(() {
+//                                   items.remove(items[index]);
+//                                 });
+//                               },
+//                               child: Icon(Icons.delete, color: Colors.red),
+//                             ),
+//                             title: Text(items[index]['name'] ?? ''),
+//                             subtitle: Row(
+//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                               children: [
+//                                 Text(
+//                                   "Gia: ${items[index]['price'].toString()} USD",
+//                                   style: TextStyle(color: Colors.green),
+//                                 ),
+//                                 Text(
+//                                   "SL: ${items[index]['quality'].toString()}",
+//                                 ),
+//                               ],
+//                             ),
+//                             onTap: () => {},
+//                           ),
+//                         );
+//                       },
+//                     ),
+//             ),
+//             Text('Tổng tiền ${sum().toString()}'),
+//             Expanded(
+//               child: repoItems.isEmpty
+//                   ? const Center(child: Text("Không có sản phẩm nào"))
+//                   : ListView.builder(
+//                       itemCount: repoItems.length,
+//                       scrollDirection: Axis.horizontal,
+//                       itemBuilder: (context, index) {
+//                         return Card(
+//                           child: Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Column(
+//                               children: [
+//                                 ClipRRect(
+//                                   child: Image.network(
+//                                     repoItems[index]['img'],
+//                                     width: 80,
+//                                     height: 80,
+//                                   ),
+//                                 ),
+//                                 Text(repoItems[index]['name'] ?? ''),
+//                                 Text(
+//                                   "Gia: ${repoItems[index]['price'].toString()} USD",
+//                                   style: TextStyle(color: Colors.green),
+//                                 ),
+//                                 SizedBox(height: 18),
+//                                 ElevatedButton(
+//                                   onPressed: () {
+//                                     if (repoItems[index]['quality'] > 0) {
+//                                       int existingIndex = items.indexWhere(
+//                                         (e) =>
+//                                             e['name'] ==
+//                                             repoItems[index]['name'],
+//                                       );
+//                                       if (existingIndex != -1) {
+//                                         items[existingIndex]['quality']++;
+//                                       } else {
+//                                         items.add({
+//                                           'name': repoItems[index]['name'],
+//                                           'price': repoItems[index]['price'],
+//                                           'quality': 1,
+//                                           'img':
+//                                               'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
+//                                         });
+//                                       }
+//                                       setState(() {
+//                                         repoItems[index]['quality']--;
+//                                       });
+//                                     } else {
+//                                       ScaffoldMessenger.of(
+//                                         context,
+//                                       ).showSnackBar(
+//                                         SnackBar(
+//                                           content: const Text(
+//                                             'Không đủ hàng để bán',
+//                                           ),
+//                                           action: SnackBarAction(
+//                                             label: 'Undo',
+//                                             onPressed: () {},
+//                                           ),
+//                                           duration: const Duration(seconds: 3),
+//                                         ),
+//                                       );
+//                                     }
+//                                   },
+//                                   child: Text('Mua deee'),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//             ),
+//             SizedBox(height: 56),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+
+//   int sum() {
+//     int total = 0;
+//     for (var e in items) {
+//       int value = (e['price'] * e['quality']);
+//       total += value;
+//     }
+//     return total;
+//   }
+// }
+
+// -------------------------------------- routes
+
+// import 'package:flutter/material.dart';
+// import 'pages/setting_page.dart';
+// import 'pages/automation_page.dart';
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       routes: {
+//         '/settings': (context) => const SettingsPage(),
+//         '/automation': (context) => const AutomationPage(),
+//       },
+//       home: const HomePage(), 
+//     );
+//   }
+// }
+
+// class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Home Page')),
+//       body: Center(
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             const Text('Home Page'),
+//             const SizedBox(height: 8),
+//             ElevatedButton(
+//               onPressed: () {
+//                 Navigator.pushNamed(context, '/settings');
+//               },
+//               child: const Text('Go to Settings Page'),
+//             ),
+//             const SizedBox(height: 8),
+//             ElevatedButton(
+//               onPressed: () {
+//                 Navigator.pushNamed(context, '/automation');
+//               },
+//               child: const Text('Go to Automation Page'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// bottom navigation 
 import 'package:flutter/material.dart';
+import 'pages/setting_page.dart';
+import 'pages/automation_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ESP32 UDP Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const WifiPage(),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
     );
   }
 }
-
-class WifiPage extends StatefulWidget {
-  const WifiPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<WifiPage> createState() => _WifiPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _WifiPageState extends State<WifiPage> {
-  List<Map<String, dynamic>> items = [];
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
 
-  List<Map<String, dynamic>> repoItems = [
-    {
-      'name': 'IPhone 17',
-      'price': 500,
-      'quality': 5,
-      'img':
-          'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
-    },
-    {
-      'name': 'IPhone 17 Air',
-      'price': 600,
-      'quality': 4,
-      'img':
-          'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
-    },
-    {
-      'name': 'IPhone 17 Pro Max',
-      'price': 700,
-      'quality': 4,
-      'img':
-          'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
-    },
+  static const List<Widget> _pages = [
+    Center(child: Text('Home')),
+    AutomationPage(),
+    SettingsPage(),
   ];
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _onTabTapped(int index) {
+    setState(() { 
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Clone Store")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Giỏ hàng'),
-            Expanded(
-              child: items.isEmpty
-                  ? const Center(child: Text("Chưa có sản phẩm nào trong GH"))
-                  : ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            leading: Image.network(items[index]['img']),
-                            trailing: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  items.remove(items[index]);
-                                });
-                              },
-                              child: Icon(Icons.delete, color: Colors.red),
-                            ),
-                            title: Text(items[index]['name'] ?? ''),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Gia: ${items[index]['price'].toString()} USD",
-                                  style: TextStyle(color: Colors.green),
-                                ),
-                                Text(
-                                  "SL: ${items[index]['quality'].toString()}",
-                                ),
-                              ],
-                            ),
-                            onTap: () => {},
-                          ),
-                        );
-                      },
-                    ),
-            ),
-            Text('Tổng tiền ${sum().toString()}'),
-            Expanded(
-              child: repoItems.isEmpty
-                  ? const Center(child: Text("Không có sản phẩm nào"))
-                  : ListView.builder(
-                      itemCount: repoItems.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  child: Image.network(
-                                    repoItems[index]['img'],
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                                ),
-                                Text(repoItems[index]['name'] ?? ''),
-                                Text(
-                                  "Gia: ${repoItems[index]['price'].toString()} USD",
-                                  style: TextStyle(color: Colors.green),
-                                ),
-                                SizedBox(height: 18),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (repoItems[index]['quality'] > 0) {
-                                      int existingIndex = items.indexWhere(
-                                        (e) =>
-                                            e['name'] ==
-                                            repoItems[index]['name'],
-                                      );
-                                      if (existingIndex != -1) {
-                                        items[existingIndex]['quality']++;
-                                      } else {
-                                        items.add({
-                                          'name': repoItems[index]['name'],
-                                          'price': repoItems[index]['price'],
-                                          'quality': 1,
-                                          'img':
-                                              'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_17_256gb_2.jpg',
-                                        });
-                                      }
-                                      setState(() {
-                                        repoItems[index]['quality']--;
-                                      });
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: const Text(
-                                            'Không đủ hàng để bán',
-                                          ),
-                                          action: SnackBarAction(
-                                            label: 'Undo',
-                                            onPressed: () {},
-                                          ),
-                                          duration: const Duration(seconds: 3),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Text('Mua deee'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
-            SizedBox(height: 56),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('Bottom Navigation Example'),
+      ),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.auto_awesome), label: 'Automation'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
       ),
     );
-  }
-
-  int sum() {
-    int total = 0;
-    for (var e in items) {
-      int value = (e['price'] * e['quality']);
-      total += value;
-    }
-    return total;
   }
 }
