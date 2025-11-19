@@ -1447,10 +1447,15 @@
 // -------------------- api
 // tạo file apiClient
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'utils/api_client.dart';
 import 'package:dio/dio.dart';
+import 'AppController.dart';
+
+
 
 void main() {
+  Get.put(AppController());
   runApp(const MyApp());
 }
 
@@ -1466,13 +1471,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getAPI();
+    final appController = Get.find<AppController>();
+    appController.callAPI();
+    // getAPI();
+
   }
 
   Future<void> getAPI() async {
     final response = await apiClient.get('/dataUITShop');
     print(response);
-
   }
 
   Widget build(BuildContext context) {
